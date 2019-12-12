@@ -18,7 +18,7 @@ public class JwtProvider {
 				.signWith(SignatureAlgorithm.HS512, "h827dedolo39hf0hs")
 				.compact();
 		
-		return token;
+		return "Bearer" + token;
 	}
 	
 	
