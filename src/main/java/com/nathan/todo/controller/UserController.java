@@ -3,6 +3,8 @@ package com.nathan.todo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,16 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	private HttpServletRequest context;
 
 	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public UserRest getUser(@PathVariable String id) {
+		
+		String context1 = context.getHeader("Authorization");
+		System.out.println(context1);
+		
 		UserRest returnValue = new UserRest();
 
 		UserDto userDto = userService.getUserByUserId(id);
