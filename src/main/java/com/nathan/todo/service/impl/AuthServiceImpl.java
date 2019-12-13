@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
 			
 		}
 		
-		String token = jwtProvider.generateUserToken(userEntity.getUserId(), userEntity.getEmail());
+		String token = jwtProvider.generateUserToken(userEntity.getEmail());
 		
 		BeanUtils.copyProperties(userEntity, returnValue);
 		

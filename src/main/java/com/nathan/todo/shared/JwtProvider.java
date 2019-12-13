@@ -11,17 +11,24 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtProvider {
-	public String generateUserToken(String userId, String email) {
+	public String generateUserToken(String email) {
+		System.out.println(email);
 		String token = Jwts.builder()
 				.setSubject(email)
 				.setExpiration(new Date(System.currentTimeMillis() + 864000000))
 				.signWith(SignatureAlgorithm.HS512, "h827dedolo39hf0hs")
 				.compact();
 		
-		return "Bearer" + token;
+		return token;
 	}
 	
-	
+	public String decodeUserToken(String token) {
+		return Jwts.parser()
+			.setSigningKey("h827dedolo39hf0hs")
+			.parseClaimsJws(token)
+			.getBody()
+			.getSubject();
+	}
 	
 //	public static boolean hasTokenExpired(String token) {
 //		boolean returnValue = true;
@@ -38,20 +45,5 @@ public class JwtProvider {
 //		}
 //		return returnValue;
 //	}
-//
-//	public String generateEmailVerificationToken(String publicUserId) {
-//		String token = Jwts.builder().setSubject(publicUserId)
-//				.setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-//				.signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret()).compact();
-//
-//		return token;
-//	}
-//
-//	public String generatePasswordResetToken(String userId) {
-//		String token = Jwts.builder().setSubject(userId)
-//				.setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.PASSOWRD_RESET_EXPIRATION_TIME))
-//				.signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret()).compact();
-//
-//		return token;
-//	}
+
 }

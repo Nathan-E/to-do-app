@@ -7,32 +7,41 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="users")
-public class UserEntity{
+@Table(name = "users")
+public class UserEntity {
 
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private String userId;
-	
-	@Column(nullable=false, length=100)
+
+	@Column(nullable = false, length = 100)
 	private String fullName;
-	
-	@Column(nullable=false, length=120)
+
+	@Column(nullable = false, length = 120)
 	private String email;
-	
-	@Column(nullable=false, length=255)
+
+	@Column(nullable = false, length = 255)
 	private String password;
-	
-	@OneToMany(mappedBy="userDetails", cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "userDetails", cascade = CascadeType.ALL)
 	private List<TaskEntity> tasks;
-	
+
+//	@ManyToMany(cascade = CascadeType.MERGE)
+//	@JoinTable(name = "users_roles", joinColumns = {
+//			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+//					@JoinColumn(name = "role_id", referencedColumnName = "id") })
+//	private List<RoleEntity> roles;
+
 	public String getPassword() {
 		return password;
 	}
@@ -72,4 +81,12 @@ public class UserEntity{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+//	public List<RoleEntity> getRoles() {
+//		return roles;
+//	}
+//
+//	public void setRoles(List<RoleEntity> roles) {
+//		this.roles = roles;
+//	}
 }
